@@ -7,16 +7,16 @@ async function initLiff() {
   try {
     await liff.init({ liffId: LIFF_ID });
 
+    if (!liff.isLoggedIn()) {
+      liff.login();
+      return;
+    }
+
+    const profile = await liff.getProfile();
     const subtitle = document.querySelector('.header-subtitle');
 
-    if (liff.isLoggedIn()) {
-      const profile = await liff.getProfile();
-      currentUserId = profile.userId;
-      subtitle.textContent = `${profile.displayName} さんのToDo`;
-    } else {
-      currentUserId = null;
-      subtitle.textContent = 'LINEミニアプリ風のシンプルToDo';
-    }
+    currentUserId = profile.userId;
+    subtitle.textContent = `${profile.displayName} さんのToDo`;
 
     todos = loadTodos(currentUserId);
     refresh();
