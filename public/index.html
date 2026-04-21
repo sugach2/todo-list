@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ToDo List</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1 class="header-title">ToDo List</h1>
+      <p class="header-subtitle">LINEミニアプリ風のシンプルToDo</p>
+    </header>
+
+    <main class="content">
+      <section class="card">
+        <div class="input-area">
+          <input id="todoInput" type="text" placeholder="やることを入力" />
+          <button id="addBtn" class="add-btn">追加</button>
+        </div>
+      </section>
+
+<section class="section">
+  <h2 id="activeTitle" class="section-title">未完了（0）</h2>
+  <ul id="todoListActive"></ul>
+  <div id="emptyActive" class="empty">未完了のToDoはありません</div>
+</section>
+
+<section class="section">
+  <h2 id="doneTitle" class="section-title">完了済み（0）</h2>
+  <ul id="todoListDone"></ul>
+  <div id="emptyDone" class="empty">完了したToDoはまだありません</div>
+</section>
+
+      <p class="footer-note">タップで完了切替、削除ボタンで消去</p>
+    </main>
+  </div>
+
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <script src="storage.js"></script>
+  <script src="ui.js"></script>
+  <script src="todo.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
