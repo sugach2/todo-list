@@ -3,31 +3,41 @@ const LIFF_ID = '2009857880-k3CjRmsc';
 let todos = [];
 let currentUserId = null;
 
-async function initLiff() {
-  try {
-    await liff.init({ liffId: LIFF_ID });
+function setDebugMessage(message) {
+  const debugMessage = document.getElementById('debugMessage');
+  if (debugMessage) {
+    debugMessage.textContent = message;
+  }
+}
 
-    // ★ここに追加（テスト用）
-    if (liff.isLoggedIn()) {
-      liff.logout();
-      window.location.reload();
-      return;
-    }
+async function initLiff() {
+  const subtitle = document.querySelector('.header-subtitle');
+
+  try {
+    setDebugMessage('LIFF init start');
+
+    await liff.init({ liffId: LIFF_ID });
+    setDebugMessage(`LIFF initialized / loggedIn=${liff.isLoggedIn()}`);
 
     if (!liff.isLoggedIn()) {
+      setDebugMessage('Not logged in -> login()');
       liff.login();
       return;
     }
 
-    const profile = await liff.getProfile();    const subtitle = document.querySelector('.header-subtitle');
+    setDebugMessage('Before getProfile()');
+    const profile = await liff.getProfile();
 
     currentUserId = profile.userId;
     subtitle.textContent = `${profile.displayName} さんのToDo`;
+    setDebugMessage(`Profile loaded: ${profile.displayName}`);
 
     todos = loadTodos(currentUserId);
     refresh();
   } catch (error) {
     console.error('LIFF initialization failed:', error);
+    subtitle.textContent = 'LIFF error';
+    setDebugMessage(`LIFF error: ${error.message}`);
   }
 }
 
