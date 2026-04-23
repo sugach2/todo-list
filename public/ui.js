@@ -10,6 +10,7 @@ const doneTitle = document.getElementById('doneTitle');
 function createTodoItem(todo, index, onToggle, onDelete) {
   const li = document.createElement('li');
   li.className = 'todo-item';
+  li.dataset.index = index;
 
   if (todo.done) {
     li.classList.add('done');

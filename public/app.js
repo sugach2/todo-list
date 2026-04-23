@@ -4,6 +4,21 @@ let todos = [];
 let currentUserId = null;
 let isSaving = false;
 
+function animateTodoPop(index) {
+  requestAnimationFrame(() => {
+    const target = document.querySelector(`.todo-item[data-index="${index}"]`);
+    if (!target) return;
+
+    target.classList.remove('popping');
+    void target.offsetWidth;
+    target.classList.add('popping');
+
+    setTimeout(() => {
+      target.classList.remove('popping');
+    }, 220);
+  });
+}
+
 async function initLiff() {
   const subtitle = document.querySelector('.header-subtitle');
 
@@ -53,9 +68,8 @@ async function handleAdd() {
 
     if (Array.isArray(created) && created.length > 0) {
       todos[0] = created[0];
+      renderTodos(todos, handleToggle, handleDelete);
     }
-
-    renderTodos(todos, handleToggle, handleDelete);
   } catch (error) {
     console.error('Failed to add todo:', error);
     todos = todos.filter(todo => !String(todo.id).startsWith('temp-'));
@@ -73,6 +87,7 @@ async function handleToggle(index) {
   const oldDone = todo.done;
   todos[index].done = !oldDone;
   renderTodos(todos, handleToggle, handleDelete);
+  animateTodoPop(index);
 
   try {
     await updateTodo(currentUserId, todo.id, !oldDone);
@@ -89,7 +104,6 @@ async function handleDelete(index) {
   if (!todo || !currentUserId) return;
 
   const deletedTodo = todos[index];
-
   todos.splice(index, 1);
   renderTodos(todos, handleToggle, handleDelete);
 
@@ -104,6 +118,13 @@ async function handleDelete(index) {
 }
 
 addBtn.addEventListener('click', handleAdd);
+
+todoInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    todoInput.blur();
+  }
+});
 
 renderTodos(todos, handleToggle, handleDelete);
 initLiff();
