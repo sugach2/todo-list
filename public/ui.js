@@ -9,6 +9,7 @@ const doneTitle = document.getElementById('doneTitle');
 
 function createTodoItem(todo, index, onToggle, onDelete) {
   const li = document.createElement('li');
+  li.className = 'todo-item';
 
   if (todo.done) {
     li.classList.add('done');
@@ -54,8 +55,13 @@ function renderTodos(todos, onToggle, onDelete) {
     }
   });
 
-  activeTitle.textContent = `未完了（${activeCount}）`;
-  doneTitle.textContent = `完了済み（${doneCount}）`;
+  if (activeTitle) {
+    activeTitle.textContent = `未完了（${activeCount}）`;
+  }
+
+  if (doneTitle) {
+    doneTitle.textContent = `完了済み（${doneCount}）`;
+  }
 
   emptyActive.style.display = activeCount === 0 ? 'block' : 'none';
   emptyDone.style.display = doneCount === 0 ? 'block' : 'none';

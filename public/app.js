@@ -89,6 +89,7 @@ async function handleDelete(index) {
   if (!todo || !currentUserId) return;
 
   const deletedTodo = todos[index];
+
   todos.splice(index, 1);
   renderTodos(todos, handleToggle, handleDelete);
 

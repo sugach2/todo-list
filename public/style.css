@@ -187,3 +187,54 @@ li.done .todo-text {
   font-size: 12px;
   margin-top: 14px;
 }
+
+li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  border-radius: 16px;
+  padding: 14px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  transition: transform 0.12s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+li:active {
+  transform: scale(0.985);
+}
+
+li.done {
+  opacity: 0.72;
+}
+
+.check-btn,
+.delete-btn,
+.add-btn {
+  transition: transform 0.12s ease, opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.check-btn:active,
+.delete-btn:active,
+.add-btn:active {
+  transform: scale(0.96);
+}
+
+.todo-text {
+  flex: 1;
+  font-size: 16px;
+  line-height: 1.4;
+  word-break: break-word;
+  cursor: pointer;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+li.done .todo-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+li.removing {
+  opacity: 0;
+  transform: translateX(12px);
+}
