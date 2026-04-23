@@ -14,8 +14,9 @@ body {
 .app {
   max-width: 480px;
   margin: 0 auto;
-  min-height: 100vh;
+  min-height: 100dvh;
   background: #f7f8fa;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 /* ヘッダー（LINE風） */
@@ -42,7 +43,7 @@ body {
 
 /* コンテンツ */
 .content {
-  padding: 14px;
+  padding: 14px 14px calc(120px + env(safe-area-inset-bottom));
 }
 
 /* カード */
@@ -51,6 +52,7 @@ body {
   border-radius: 14px;
   padding: 12px;
   margin-bottom: 14px;
+  scroll-margin-top: 80px;
 }
 
 /* 入力欄 */
