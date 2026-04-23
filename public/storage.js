@@ -1,17 +1,38 @@
-function getStorageKey(userId) {
+async function loadTodos(userId) {
   if (!userId) {
-    return 'todos_guest';
+    return [];
   }
 
-  return `todos_${userId}`;
+  const response = await fetch('/api/todos', {
+    headers: {
+      'x-user-id': userId,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to load todos');
+  }
+
+  return await response.json();
 }
 
-function loadTodos(userId) {
-  const key = getStorageKey(userId);
-  return JSON.parse(localStorage.getItem(key)) || [];
-}
+async function saveTodo(userId, text) {
+  if (!userId) {
+    throw new Error('Missing userId');
+  }
 
-function saveTodos(userId, todos) {
-  const key = getStorageKey(userId);
-  localStorage.setItem(key, JSON.stringify(todos));
+  const response = await fetch('/api/todos', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-user-id': userId,
+    },
+    body: JSON.stringify({ text }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to save todo');
+  }
+
+  return await response.json();
 }

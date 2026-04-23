@@ -19,37 +19,35 @@ async function initLiff() {
     currentUserId = profile.userId;
     subtitle.textContent = `${profile.displayName} さんのToDo`;
 
-    todos = loadTodos(currentUserId);
-    refresh();
+    todos = await loadTodos(currentUserId);
+    renderTodos(todos, handleToggle, handleDelete);
   } catch (error) {
     console.error('LIFF initialization failed:', error);
     subtitle.textContent = 'LINEミニアプリ風のシンプルToDo';
   }
 }
 
-function refresh() {
-  saveTodos(currentUserId, todos);
+async function refreshFromServer() {
+  todos = await loadTodos(currentUserId);
   renderTodos(todos, handleToggle, handleDelete);
 }
 
-function handleAdd() {
+async function handleAdd() {
   const text = todoInput.value.trim();
-  if (!text) return;
+  if (!text || !currentUserId) return;
 
-  addTodo(todos, text);
+  await saveTodo(currentUserId, text);
   todoInput.value = '';
   todoInput.blur();
-  refresh();
+  await refreshFromServer();
 }
 
 function handleToggle(index) {
-  toggleTodo(todos, index);
-  refresh();
+  console.log('toggle will be added next', index);
 }
 
 function handleDelete(index) {
-  deleteTodo(todos, index);
-  refresh();
+  console.log('delete will be added next', index);
 }
 
 addBtn.addEventListener('click', handleAdd);
