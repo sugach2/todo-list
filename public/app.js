@@ -48,12 +48,30 @@ async function handleAdd() {
   }
 }
 
-function handleToggle(index) {
-  console.log('toggle will be added next', index);
+async function handleToggle(index) {
+  try {
+    const todo = todos[index];
+    if (!todo || !currentUserId) return;
+
+    await updateTodo(currentUserId, todo.id, !todo.done);
+    await refreshFromServer();
+  } catch (error) {
+    console.error('Failed to toggle todo:', error);
+    alert(error.message);
+  }
 }
 
-function handleDelete(index) {
-  console.log('delete will be added next', index);
+async function handleDelete(index) {
+  try {
+    const todo = todos[index];
+    if (!todo || !currentUserId) return;
+
+    await deleteTodoFromServer(currentUserId, todo.id);
+    await refreshFromServer();
+  } catch (error) {
+    console.error('Failed to delete todo:', error);
+    alert(error.message);
+  }
 }
 
 addBtn.addEventListener('click', handleAdd);
