@@ -194,34 +194,3 @@ ul {
   margin-top: 10px;
   padding-bottom: 16px;
 }
-
-.todo-item {
-  animation: todoFadeIn 0.22s ease;
-}
-
-.todo-item.popping {
-  animation: todoPop 0.18s ease;
-}
-
-@keyframes todoFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes todoPop {
-  0% {
-    transform: scale(1);
-  }
-  40% {
-    transform: scale(0.96);
-  }
-  100% {
-    transform: scale(1);
-  }
-}

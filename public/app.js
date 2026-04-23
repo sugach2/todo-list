@@ -4,21 +4,6 @@ let todos = [];
 let currentUserId = null;
 let isSaving = false;
 
-function animateTodoPop(index) {
-  requestAnimationFrame(() => {
-    const target = document.querySelector(`.todo-item[data-index="${index}"]`);
-    if (!target) return;
-
-    target.classList.remove('popping');
-    void target.offsetWidth;
-    target.classList.add('popping');
-
-    setTimeout(() => {
-      target.classList.remove('popping');
-    }, 220);
-  });
-}
-
 async function initLiff() {
   const subtitle = document.querySelector('.header-subtitle');
 
@@ -87,7 +72,6 @@ async function handleToggle(index) {
   const oldDone = todo.done;
   todos[index].done = !oldDone;
   renderTodos(todos, handleToggle, handleDelete);
-  animateTodoPop(index);
 
   try {
     await updateTodo(currentUserId, todo.id, !oldDone);
