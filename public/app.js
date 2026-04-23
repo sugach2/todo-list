@@ -24,6 +24,7 @@ async function initLiff() {
   } catch (error) {
     console.error('LIFF initialization failed:', error);
     subtitle.textContent = 'LINEミニアプリ風のシンプルToDo';
+    alert(error.message);
   }
 }
 
@@ -33,13 +34,18 @@ async function refreshFromServer() {
 }
 
 async function handleAdd() {
-  const text = todoInput.value.trim();
-  if (!text || !currentUserId) return;
+  try {
+    const text = todoInput.value.trim();
+    if (!text || !currentUserId) return;
 
-  await saveTodo(currentUserId, text);
-  todoInput.value = '';
-  todoInput.blur();
-  await refreshFromServer();
+    await saveTodo(currentUserId, text);
+    todoInput.value = '';
+    todoInput.blur();
+    await refreshFromServer();
+  } catch (error) {
+    console.error('Failed to add todo:', error);
+    alert(error.message);
+  }
 }
 
 function handleToggle(index) {
