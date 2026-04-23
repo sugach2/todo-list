@@ -64,6 +64,7 @@ input {
   font-size: 16px;
   outline: none;
   background: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 input:focus {
@@ -81,10 +82,11 @@ input:focus {
   font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
+  transition: transform 0.12s ease, opacity 0.2s ease, background-color 0.2s ease;
 }
 
 .add-btn:active {
-  transform: scale(0.98);
+  transform: scale(0.96);
 }
 
 .section {
@@ -104,7 +106,8 @@ ul {
   margin: 0;
 }
 
-li {
+li,
+.todo-item {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -113,6 +116,17 @@ li {
   padding: 14px;
   margin-bottom: 10px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  transition: transform 0.12s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+li:active,
+.todo-item:active {
+  transform: scale(0.985);
+}
+
+li.done,
+.todo-item.done {
+  opacity: 0.72;
 }
 
 .check-btn {
@@ -124,14 +138,21 @@ li {
   cursor: pointer;
   flex-shrink: 0;
   position: relative;
+  transition: transform 0.12s ease, opacity 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
 
-li.done .check-btn {
+.check-btn:active {
+  transform: scale(0.96);
+}
+
+li.done .check-btn,
+.todo-item.done .check-btn {
   border-color: #06c755;
   background: #06c755;
 }
 
-li.done .check-btn::after {
+li.done .check-btn::after,
+.todo-item.done .check-btn::after {
   content: "";
   position: absolute;
   left: 6px;
@@ -149,9 +170,11 @@ li.done .check-btn::after {
   line-height: 1.4;
   word-break: break-word;
   cursor: pointer;
+  transition: color 0.2s ease, opacity 0.2s ease;
 }
 
-li.done .todo-text {
+li.done .todo-text,
+.todo-item.done .todo-text {
   text-decoration: line-through;
   color: #999;
 }
@@ -165,10 +188,11 @@ li.done .todo-text {
   font-size: 13px;
   cursor: pointer;
   flex-shrink: 0;
+  transition: transform 0.12s ease, opacity 0.2s ease, background-color 0.2s ease;
 }
 
 .delete-btn:active {
-  transform: scale(0.98);
+  transform: scale(0.96);
 }
 
 .empty {
@@ -188,53 +212,8 @@ li.done .todo-text {
   margin-top: 14px;
 }
 
-li {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: white;
-  border-radius: 16px;
-  padding: 14px;
-  margin-bottom: 10px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-  transition: transform 0.12s ease, opacity 0.2s ease, box-shadow 0.2s ease;
-}
-
-li:active {
-  transform: scale(0.985);
-}
-
-li.done {
-  opacity: 0.72;
-}
-
-.check-btn,
-.delete-btn,
-.add-btn {
-  transition: transform 0.12s ease, opacity 0.2s ease, background-color 0.2s ease;
-}
-
-.check-btn:active,
-.delete-btn:active,
-.add-btn:active {
-  transform: scale(0.96);
-}
-
-.todo-text {
-  flex: 1;
-  font-size: 16px;
-  line-height: 1.4;
-  word-break: break-word;
-  cursor: pointer;
-  transition: color 0.2s ease, opacity 0.2s ease;
-}
-
-li.done .todo-text {
-  text-decoration: line-through;
-  color: #999;
-}
-
-li.removing {
+li.removing,
+.todo-item.removing {
   opacity: 0;
   transform: translateX(12px);
 }
