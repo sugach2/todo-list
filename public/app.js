@@ -19,7 +19,8 @@ async function initLiff() {
     currentUserId = profile.userId;
     subtitle.textContent = `${profile.displayName} さんのToDo`;
 
-    await refreshFromServer();
+    todos = await loadTodos(currentUserId);
+    renderTodos(todos, handleToggle, handleDelete);
   } catch (error) {
     console.error('LIFF initialization failed:', error);
     subtitle.textContent = 'LINEミニアプリ風のシンプルToDo';
@@ -27,20 +28,20 @@ async function initLiff() {
   }
 }
 
-async function refreshFromServer() {
-  todos = await loadTodos(currentUserId);
-  renderTodos(todos, handleToggle, handleDelete);
-}
-
 async function handleAdd() {
   try {
     const text = todoInput.value.trim();
     if (!text || !currentUserId) return;
 
-    await saveTodo(currentUserId, text);
+    const created = await saveTodo(currentUserId, text);
+
+    if (Array.isArray(created) && created.length > 0) {
+      todos.unshift(created[0]);
+    }
+
     todoInput.value = '';
     todoInput.blur();
-    await refreshFromServer();
+    renderTodos(todos, handleToggle, handleDelete);
   } catch (error) {
     console.error('Failed to add todo:', error);
     alert(error.message);
@@ -52,8 +53,15 @@ async function handleToggle(index) {
     const todo = todos[index];
     if (!todo || !currentUserId) return;
 
-    await updateTodo(currentUserId, todo.id, !todo.done);
-    await refreshFromServer();
+    const updated = await updateTodo(currentUserId, todo.id, !todo.done);
+
+    if (Array.isArray(updated) && updated.length > 0) {
+      todos[index] = updated[0];
+    } else {
+      todos[index].done = !todos[index].done;
+    }
+
+    renderTodos(todos, handleToggle, handleDelete);
   } catch (error) {
     console.error('Failed to toggle todo:', error);
     alert(error.message);
@@ -66,7 +74,8 @@ async function handleDelete(index) {
     if (!todo || !currentUserId) return;
 
     await deleteTodoFromServer(currentUserId, todo.id);
-    await refreshFromServer();
+    todos.splice(index, 1);
+    renderTodos(todos, handleToggle, handleDelete);
   } catch (error) {
     console.error('Failed to delete todo:', error);
     alert(error.message);
