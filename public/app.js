@@ -19,8 +19,7 @@ async function initLiff() {
     currentUserId = profile.userId;
     subtitle.textContent = `${profile.displayName} さんのToDo`;
 
-    todos = await loadTodos(currentUserId);
-    renderTodos(todos, handleToggle, handleDelete);
+    await refreshFromServer();
   } catch (error) {
     console.error('LIFF initialization failed:', error);
     subtitle.textContent = 'LINEミニアプリ風のシンプルToDo';
