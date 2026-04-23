@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Hiragino Sans", "Yu Gothic", sans-serif;
@@ -10,16 +14,13 @@ body {
   letter-spacing: 0.02em;
 }
 
-/* アプリ全体 */
 .app {
   max-width: 480px;
   margin: 0 auto;
   min-height: 100dvh;
   background: #f7f8fa;
-  padding-bottom: env(safe-area-inset-bottom);
 }
 
-/* ヘッダー（LINE風） */
 .header {
   background: #06c755;
   color: white;
@@ -41,24 +42,21 @@ body {
   opacity: 0.9;
 }
 
-/* コンテンツ */
 .content {
-  padding: 14px 14px calc(120px + env(safe-area-inset-bottom));
+  padding: 14px 14px 96px;
 }
 
-/* カード */
 .card {
   background: white;
   border-radius: 14px;
   padding: 12px;
   margin-bottom: 14px;
-  scroll-margin-top: 80px;
 }
 
-/* 入力欄 */
 .input-area {
   display: flex;
   gap: 8px;
+  align-items: center;
 }
 
 input {
@@ -66,18 +64,20 @@ input {
   border: none;
   border-radius: 10px;
   padding: 12px;
-  font-size: 15px;
+  font-size: 16px;
   background: #f1f3f5;
   outline: none;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
-/* 追加ボタン */
 .add-btn {
   border: none;
   border-radius: 10px;
   background: #06c755;
   color: white;
   padding: 0 14px;
+  min-height: 48px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
@@ -88,7 +88,6 @@ input {
   transform: scale(0.95);
 }
 
-/* セクション */
 .section {
   margin-bottom: 12px;
 }
@@ -100,14 +99,12 @@ input {
   margin: 0 0 8px;
 }
 
-/* リスト */
 ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-/* ToDoアイテム（ここが肝） */
 .todo-item {
   display: flex;
   align-items: center;
@@ -123,7 +120,10 @@ ul {
   transform: scale(0.98);
 }
 
-/* チェックボタン */
+.todo-item.done {
+  opacity: 0.72;
+}
+
 .check-btn {
   width: 22px;
   height: 22px;
@@ -152,7 +152,6 @@ ul {
   transform: rotate(45deg);
 }
 
-/* テキスト */
 .todo-text {
   flex: 1;
   font-size: 15px;
@@ -165,7 +164,6 @@ ul {
   color: #aaa;
 }
 
-/* 削除ボタン */
 .delete-btn {
   border: none;
   background: #f2f3f5;
@@ -180,7 +178,6 @@ ul {
   transform: scale(0.95);
 }
 
-/* 空状態 */
 .empty {
   text-align: center;
   color: #aaa;
@@ -190,10 +187,10 @@ ul {
   border-radius: 12px;
 }
 
-/* フッター */
 .footer-note {
   text-align: center;
   color: #aaa;
   font-size: 11px;
   margin-top: 10px;
+  padding-bottom: 16px;
 }

@@ -105,14 +105,5 @@ async function handleDelete(index) {
 
 addBtn.addEventListener('click', handleAdd);
 
-todoInput.addEventListener('focus', () => {
-  setTimeout(() => {
-    todoInput.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
-  }, 250);
-});
-
 renderTodos(todos, handleToggle, handleDelete);
 initLiff();
